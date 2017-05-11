@@ -30,7 +30,12 @@ public class Post extends AsyncTask<Void, Void, Void> {
 
 
     JsonObject json = null;
+    JsonObject summaryJson = null;
     String response;
+    String membershipID ="";
+    String firstCharacterID = "";
+
+    String playerUsername = "wheels00769";
 //    {
 //
 ////        Activity c;
@@ -48,6 +53,7 @@ public class Post extends AsyncTask<Void, Void, Void> {
 
     private String jsonResponse ="";
 
+
     public Post(MainActivity currentActivity) {
         this.currentActivity = currentActivity;
     }
@@ -60,7 +66,7 @@ public class Post extends AsyncTask<Void, Void, Void> {
             // Endpoint for Gjallarhorn
 //            String url = "https://www.bungie.net/platform/Destiny/Manifest/InventoryItem/1274330687/";
 
-            String url = "https://www.bungie.net/Platform/Destiny/SearchDestinyPlayer/2/wheels00769/";
+            String url = "https://www.bungie.net/Platform/Destiny/SearchDestinyPlayer/2/"+playerUsername+"/";
 
             //Account summary
 //            String url = "https://www.bungie.net/Platform/Destiny/2/Account/4611686018439307322/Summary/";
@@ -102,9 +108,77 @@ public class Post extends AsyncTask<Void, Void, Void> {
 //            jsonResponse = (json.getAsJsonObject("Response").getAsJsonObject("data").get("membershipType")).toString();
 
             //get membershipID
-            jsonResponse = (json.getAsJsonArray("Response").get(0).getAsJsonObject().get("membershipId")).toString();
+            jsonResponse = (json.getAsJsonArray("Response").get(0).getAsJsonObject().get("membershipId")).getAsString();
 
             JsonArray jArr = json.getAsJsonArray("Response");
+
+            System.out.println(jsonResponse);
+
+            for(JsonElement jE : jArr){
+                JsonObject jo = jE.getAsJsonObject();
+                //jo.get("membershipId");
+            }
+
+
+
+            // Toast.makeText(c, json.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonObject("inventoryItem").get("itemName").toString(), Toast.LENGTH_LONG).show();
+            //String s = json.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonObject("inventoryItem").get("itemName").toString();
+            //Log.d(test, "test message");
+
+
+            //commented out success, uncomment for original
+//            if(jsonResponse != null){
+//                success = true;
+//            }
+
+
+            //get membershipID
+
+            String searchDestinyPlayer = "https://www.bungie.net/Platform/Destiny/2/Account/"+jsonResponse+"/Summary/";
+
+            URL getMembershipIdURL = new URL(searchDestinyPlayer);
+            HttpURLConnection con2 = (HttpURLConnection) getMembershipIdURL.openConnection();
+
+            con2.setRequestMethod("GET");
+
+            // Set header
+            con2.setRequestProperty("X-API-KEY", apiKey);
+
+            int membershipIdResponseCode = con2.getResponseCode();
+            System.out.println("\nSending 'GET' request to Bungie.Net : " + searchDestinyPlayer);
+            System.out.println("Response Code : " + membershipIdResponseCode);
+
+            BufferedReader in2 = new BufferedReader(new InputStreamReader(con2.getInputStream()));
+            String inputLine2;
+            String membershipResponse = "";
+
+            while ((inputLine2 = in2.readLine()) != null) {
+                membershipResponse += inputLine2;
+            }
+
+            in.close();
+
+            // Uses Gson - https://github.com/google/gson
+            JsonParser membershipIDparser = new JsonParser();
+            summaryJson = (JsonObject) membershipIDparser.parse(membershipResponse);
+
+            System.out.println();
+//                System.out.println
+
+            //Gjallarhorn response
+//            jsonResponse = (json.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonObject("inventoryItem").get("itemName")).toString();
+
+            //Working account summary
+//            jsonResponse = (json.getAsJsonObject("Response").getAsJsonObject("data").get("membershipType")).toString();
+
+            //get membershipID
+//            String membershipID = (summaryJson.getAsJsonArray("Response").get(0).getAsJsonObject().get("membershipId")).getAsString();
+
+            //get Character[0] ID
+            firstCharacterID = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(0).getAsJsonObject().getAsJsonObject("characterBase").get("characterId")).toString();
+
+            System.out.println(firstCharacterID);
+//            JsonArray jArr = json.getAsJsonArray("Response");
 
 
             for(JsonElement jE : jArr){
@@ -118,10 +192,11 @@ public class Post extends AsyncTask<Void, Void, Void> {
             //String s = json.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonObject("inventoryItem").get("itemName").toString();
             //Log.d(test, "test message");
 
-            if(jsonResponse != null){
+            if(firstCharacterID != null){
                 success = true;
             }
 
+            //end summary
 
 
           //  Toast.makeText(currentActivity, s, Toast.LENGTH_SHORT).show();
@@ -141,6 +216,9 @@ public class Post extends AsyncTask<Void, Void, Void> {
 
     }
 
+    //get summary
+
+
     @Override
     protected void onPostExecute(Void aVoid) {
 
@@ -158,7 +236,7 @@ public class Post extends AsyncTask<Void, Void, Void> {
 
         if(success)
         {
-            Toast.makeText(currentActivity, jsonResponse, Toast.LENGTH_LONG).show();
+            Toast.makeText(currentActivity, "CharacterID from variable: "+firstCharacterID, Toast.LENGTH_LONG).show();
 
             currentActivity.dumpJSON(response);
 
