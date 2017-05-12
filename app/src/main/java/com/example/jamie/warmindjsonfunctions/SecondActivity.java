@@ -21,7 +21,7 @@ public class SecondActivity extends AppCompatActivity {
 
     public ListView lv;
     TextView displayMembershipID;
-    TextView displayCharacterLightLevel;
+    TextView displayFirstCharacterType;
     ImageView emblemIcon;
     ImageView emblemBackground;
 
@@ -29,6 +29,7 @@ public class SecondActivity extends AppCompatActivity {
 
     String bungie = "https://bungie.net";
     String appendEmblem;
+    String appendBackground;
 
 
 
@@ -47,7 +48,7 @@ public class SecondActivity extends AppCompatActivity {
         n.execute();
 
         displayMembershipID = (TextView)findViewById(R.id.displayMembershipID);
-        displayCharacterLightLevel = (TextView)findViewById(R.id.displayCharacterLightLevel);
+        displayFirstCharacterType = (TextView)findViewById(R.id.displayFirstCharacterType);
         emblemIcon = (ImageView)findViewById(R.id.emblemIcon);
         emblemBackground = (ImageView)findViewById(R.id.emblemBackground);
 //        emblemIcon = (ImageView)findViewById(R.id.emblemIcon);
@@ -64,10 +65,21 @@ public class SecondActivity extends AppCompatActivity {
     }
     public void dumpJSON(String firstCharacterID, String firstClassType, String firstCharacterEmblem, String firstCharacterEmblemBackground) {
         displayMembershipID.setText(firstCharacterID);
-        displayCharacterLightLevel.setText(firstClassType);
+        System.out.println(firstClassType);
+        if(Integer.parseInt(firstClassType) == 0){
+            displayFirstCharacterType.setText("Titan");
+        }
+        else if(Integer.parseInt(firstClassType) == 1){
+            displayFirstCharacterType.setText("Hunter");
+        }
+        else if(Integer.parseInt(firstClassType) == 2){
+            displayFirstCharacterType.setText("Warlock");
+        }
+//        displayCharacterLightLevel.setText(firstClassType);
         System.out.println("Emblem link: "+firstCharacterEmblem);
 
         appendEmblem = bungie+firstCharacterEmblem;
+        appendBackground = bungie+firstCharacterEmblemBackground;
 //                "\nFirst Character class Type: "+firstClassType+
 //                "\nFirst Character Emblem: "+firstCharacterEmblem+
 //                "\nFirst Character Background: "+firstCharacterEmblemBackground);
@@ -76,6 +88,7 @@ public class SecondActivity extends AppCompatActivity {
 
         new downloadImage(this, emblemIcon).execute(appendEmblem);
 
+        new downloadBackground(this, emblemBackground).execute(appendBackground);
 
         System.out.println(appendEmblem);
 

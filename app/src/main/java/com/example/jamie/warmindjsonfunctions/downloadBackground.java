@@ -13,17 +13,17 @@ import java.io.InputStream;
  * Created by jamie on 12/5/17.
  */
 
-public class downloadImage extends AsyncTask<String, Void, Bitmap> {
+public class downloadBackground extends AsyncTask<String, Void, Bitmap> {
 
     private SecondActivity currentActivity;
 
-//    private ProgressDialog mDialog;
-    private ImageView emblemIcon;
+    //    private ProgressDialog mDialog;
+    private ImageView emblemBackground;
 //    private ImageView emblemBackground;
 
-    public downloadImage(SecondActivity currentActivity, ImageView emblemIcon) {
+    public downloadBackground(SecondActivity currentActivity, ImageView emblemBackground) {
         this.currentActivity = currentActivity;
-        this.emblemIcon = emblemIcon;
+        this.emblemBackground = emblemBackground;
 //        this.emblemBackground = emblemBackground
     }
 
@@ -49,7 +49,7 @@ public class downloadImage extends AsyncTask<String, Void, Bitmap> {
 
     protected void onPostExecute(Bitmap result) {
         //set image of your imageview
-        emblemIcon.setImageBitmap(result);
+        emblemBackground.setImageBitmap(result);
         //close
 //        mDialog.dismiss();
     }
