@@ -13,24 +13,19 @@ import java.io.InputStream;
  * Created by jamie on 12/5/17.
  */
 
-public class downloadBackground extends AsyncTask<String, Void, Bitmap> {
+class downloadBackground extends AsyncTask<String, Void, Bitmap> {
 
     private SecondActivity currentActivity;
-
-    //    private ProgressDialog mDialog;
     private ImageView emblemBackground;
-//    private ImageView emblemBackground;
 
     public downloadBackground(SecondActivity currentActivity, ImageView emblemBackground) {
         this.currentActivity = currentActivity;
         this.emblemBackground = emblemBackground;
-//        this.emblemBackground = emblemBackground
     }
 
     protected void onPreExecute() {
 
         Toast.makeText(currentActivity, "Loading Images..", Toast.LENGTH_LONG).show();
-//        mDialog = ProgressDialog.show(ChartActivity.this,"Please wait...", "Retrieving data ...", true);
     }
 
     protected Bitmap doInBackground(String... urls) {
@@ -48,10 +43,8 @@ public class downloadBackground extends AsyncTask<String, Void, Bitmap> {
     }
 
     protected void onPostExecute(Bitmap result) {
-        //set image of your imageview
+        //set backgroundImage of emblem
         emblemBackground.setImageBitmap(result);
-        //close
-//        mDialog.dismiss();
     }
 }
 

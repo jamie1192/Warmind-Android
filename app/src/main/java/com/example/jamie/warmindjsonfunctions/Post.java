@@ -1,34 +1,17 @@
 package com.example.jamie.warmindjsonfunctions;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Bundle;
-import android.widget.EditText;
-import android.widget.ListAdapter;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.google.gson.annotations.SerializedName;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by jamie on 4/5/17.
@@ -91,6 +74,7 @@ public class Post extends AsyncTask<Void, Void, Void> {
 ////        public netTask(Activity c) {
 ////        this.c = c;
 //    }
+    Integer consoleChoice;
 
     private SecondActivity currentActivity;
 
@@ -103,10 +87,11 @@ public class Post extends AsyncTask<Void, Void, Void> {
     private String jsonResponse ="";
 
 
-    public Post(SecondActivity currentActivity, String playerUsername) {
+    public Post(SecondActivity currentActivity, String playerUsername, Integer consoleChoice) {
 
         this.currentActivity = currentActivity;
         this.playerUsername = playerUsername;
+        this.consoleChoice = consoleChoice;
     }
 
     @Override
@@ -117,7 +102,7 @@ public class Post extends AsyncTask<Void, Void, Void> {
             // Endpoint for Gjallarhorn
 //            String url = "https://www.bungie.net/platform/Destiny/Manifest/InventoryItem/1274330687/";
 
-            String url = "https://www.bungie.net/Platform/Destiny/SearchDestinyPlayer/2/"+playerUsername+"/";
+            String url = "https://www.bungie.net/Platform/Destiny/SearchDestinyPlayer/"+consoleChoice+"/"+playerUsername+"/";
 
             //Account summary
 //            String url = "https://www.bungie.net/Platform/Destiny/2/Account/4611686018439307322/Summary/";
@@ -184,7 +169,7 @@ public class Post extends AsyncTask<Void, Void, Void> {
 
             //get membershipID
 
-            String searchDestinyPlayer = "https://www.bungie.net/Platform/Destiny/2/Account/"+membershipID+"/Summary/";
+            String searchDestinyPlayer = "https://www.bungie.net/Platform/Destiny/"+consoleChoice+"/Account/"+membershipID+"/Summary/";
 
             URL getMembershipIdURL = new URL(searchDestinyPlayer);
             HttpURLConnection con2 = (HttpURLConnection) getMembershipIdURL.openConnection();
@@ -317,7 +302,7 @@ public class Post extends AsyncTask<Void, Void, Void> {
 
             //Toast.makeText(currentActivity, "CharacterID: "+firstCharacterID+"Classtype: "+characterLightLevels[0], Toast.LENGTH_LONG).show();
 
-            currentActivity.dumpJSON(firstCharacterID, firstClassType, firstCharacterEmblem, firstCharacterEmblemBackground);
+            currentActivity.showResults(firstCharacterID, firstClassType, firstCharacterEmblem, firstCharacterEmblemBackground);
 
 
 

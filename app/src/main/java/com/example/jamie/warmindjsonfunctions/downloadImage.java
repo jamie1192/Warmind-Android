@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import java.io.InputStream;
 
+
 /**
  * Created by jamie on 12/5/17.
  */
@@ -17,20 +18,15 @@ public class downloadImage extends AsyncTask<String, Void, Bitmap> {
 
     private SecondActivity currentActivity;
 
-//    private ProgressDialog mDialog;
     private ImageView emblemIcon;
-//    private ImageView emblemBackground;
 
     public downloadImage(SecondActivity currentActivity, ImageView emblemIcon) {
         this.currentActivity = currentActivity;
         this.emblemIcon = emblemIcon;
-//        this.emblemBackground = emblemBackground
     }
 
     protected void onPreExecute() {
-
         Toast.makeText(currentActivity, "Loading Images..", Toast.LENGTH_LONG).show();
-//        mDialog = ProgressDialog.show(ChartActivity.this,"Please wait...", "Retrieving data ...", true);
     }
 
     protected Bitmap doInBackground(String... urls) {
@@ -48,10 +44,8 @@ public class downloadImage extends AsyncTask<String, Void, Bitmap> {
     }
 
     protected void onPostExecute(Bitmap result) {
-        //set image of your imageview
+        //set image imageview
         emblemIcon.setImageBitmap(result);
-        //close
-//        mDialog.dismiss();
     }
 }
 

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
@@ -17,6 +18,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static android.view.View.INVISIBLE;
+
 public class SecondActivity extends AppCompatActivity {
 
     public ListView lv;
@@ -24,13 +27,16 @@ public class SecondActivity extends AppCompatActivity {
     TextView displayFirstCharacterType;
     ImageView emblemIcon;
     ImageView emblemBackground;
+    ProgressBar loadingSpinner;
 
     String firstCharacterEmblem;
 
     String bungie = "https://bungie.net";
     String appendEmblem;
     String appendBackground;
+    Boolean console;
 
+    Integer consoleChoice;
 
 
     @Override
@@ -40,13 +46,29 @@ public class SecondActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         String playerUsername = extras.getString("user");
+        Boolean console = extras.getBoolean("console");
+
+        if (console == true){
+            consoleChoice = 1;
+        }
+        else {
+            consoleChoice = 2;
+        }
+        System.out.println("Console bool: "+console);
+
+
+//
+//        Bundle extras = getIntent().getExtras();
+//        String username_string = extras.getString("EXTRA_USERNAME");
+//        String password_string = extras.getString("EXTRA_PASSWORD");
 
 
 //        lv = (ListView) findViewById(R.id.list);
 
-        Post n = new Post(SecondActivity.this, playerUsername);
+        Post n = new Post(SecondActivity.this, playerUsername, consoleChoice);
         n.execute();
 
+        loadingSpinner = (ProgressBar)findViewById(R.id.loadingSpinner);
         displayMembershipID = (TextView)findViewById(R.id.displayMembershipID);
         displayFirstCharacterType = (TextView)findViewById(R.id.displayFirstCharacterType);
         emblemIcon = (ImageView)findViewById(R.id.emblemIcon);
@@ -54,7 +76,7 @@ public class SecondActivity extends AppCompatActivity {
 //        emblemIcon = (ImageView)findViewById(R.id.emblemIcon);
 //        emblemBackground = (ImageView)findViewById(R.id.emblemBackground);
 
-//        public void dumpJSON(String jsonStr) {
+//        public void showResults(String jsonStr) {
 //            outputTextView.setText(jsonStr);
 //        }
 
@@ -63,7 +85,7 @@ public class SecondActivity extends AppCompatActivity {
 //        }
 
     }
-    public void dumpJSON(String firstCharacterID, String firstClassType, String firstCharacterEmblem, String firstCharacterEmblemBackground) {
+    public void showResults(String firstCharacterID, String firstClassType, String firstCharacterEmblem, String firstCharacterEmblemBackground) {
         displayMembershipID.setText(firstCharacterID);
         System.out.println(firstClassType);
         if(Integer.parseInt(firstClassType) == 0){
@@ -75,6 +97,8 @@ public class SecondActivity extends AppCompatActivity {
         else if(Integer.parseInt(firstClassType) == 2){
             displayFirstCharacterType.setText("Warlock");
         }
+
+        loadingSpinner.setVisibility(INVISIBLE);
 //        displayCharacterLightLevel.setText(firstClassType);
         System.out.println("Emblem link: "+firstCharacterEmblem);
 
