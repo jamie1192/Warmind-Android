@@ -6,4 +6,5 @@
     <string name="characterClass">Character Class</string>
     <string name="characterEmblem">Character Emblem</string>
     <string name="lightLevel">Light Level</string>
+    <string name="lightIcon">✦ %1$s</string>
 </resources>

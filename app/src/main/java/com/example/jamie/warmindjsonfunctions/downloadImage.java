@@ -4,10 +4,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.io.InputStream;
+
+import static android.view.View.INVISIBLE;
 
 
 /**
@@ -19,6 +23,7 @@ public class downloadImage extends AsyncTask<String, Void, Bitmap> {
     private SecondActivity currentActivity;
 
     private ImageView emblemIcon;
+    public ProgressBar loadingSpinner;
 
     public downloadImage(SecondActivity currentActivity, ImageView emblemIcon) {
         this.currentActivity = currentActivity;
@@ -26,7 +31,7 @@ public class downloadImage extends AsyncTask<String, Void, Bitmap> {
     }
 
     protected void onPreExecute() {
-        Toast.makeText(currentActivity, "Loading Images..", Toast.LENGTH_LONG).show();
+//        Toast.makeText(currentActivity, "Loading Images..", Toast.LENGTH_LONG).show();
     }
 
     protected Bitmap doInBackground(String... urls) {

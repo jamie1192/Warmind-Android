@@ -13,4 +13,6 @@
     <color name="enable_track_xbox">#c307890e</color>
     <color name="enable_track_psn">#e20066ff</color>
 
+    <color name="lightLevel">#ffd700</color>
+
 </resources>

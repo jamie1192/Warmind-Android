@@ -10,6 +10,10 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.jamie.warmindjsonfunctions.SecondActivity">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -41,24 +45,22 @@
             android:layout_marginBottom="20dp"
             />
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="80dp">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/characterEmblem"
-                android:id="@+id/textView" />
 
-        <ImageView
-            android:layout_width="410dp"
-            android:layout_height="match_parent"
-            android:id="@+id/emblemBackground"
-            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:layout_marginBottom="20dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/emblemBackground"
+                />
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
                 android:id="@+id/emblemIcon"
+
                 />
 
             <ProgressBar
@@ -67,22 +69,137 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignEnd="@+id/emblemIcon"
-                android:layout_below="@+id/textView"
-                android:layout_marginEnd="14dp"
 
-                android:layout_marginTop="6dp"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="14dp"
                 android:indeterminate="true"
-                android:visibility="visible" />
+                android:visibility="invisible" />
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="Hunter"
+                android:id="@+id/firstClassType"
+                android:textSize="20sp"
+                android:textColor="#fff"
+                android:layout_marginStart="25dp"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/emblemIcon"
+                android:layout_marginTop="23dp" />
+
+            <TextView
+                android:id="@+id/firstLightLevel"
+                android:textSize="20sp"
+                android:textColor="@color/lightLevel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignTop="@+id/firstClassType"
+                android:layout_marginEnd="14dp"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:layout_marginBottom="20dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/secondEmblemBackground"
+                />
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:id="@+id/secondEmblemIcon"
+                />
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="Hunter"
+                android:id="@+id/secondClassType"
+                android:textSize="20sp"
+                android:textColor="#fff"
+                android:layout_marginStart="25dp"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/secondEmblemIcon"
+                android:layout_marginTop="23dp" />
+
+            <ProgressBar
+                android:id="@+id/loadingSpinner2"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:visibility="visible"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="15dp" />
+
+            <TextView
+                android:id="@+id/secondLightLevel"
+                android:textSize="20sp"
+                android:textColor="@color/lightLevel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignTop="@+id/secondClassType"
+                android:layout_marginEnd="12dp">
+
+            </TextView>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginBottom="20dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/thirdEmblemBackground"
+                />
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:id="@+id/thirdEmblemIcon"
+                />
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="Hunter"
+                android:id="@+id/thirdClassType"
+                android:textSize="20sp"
+                android:textColor="#fff"
+                android:layout_marginStart="25dp"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/thirdEmblemIcon"
+                android:layout_marginTop="23dp" />
+
+            <ProgressBar
+                android:id="@+id/loadingSpinner3"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="15dp"
+                android:indeterminate="true"
+                android:visibility="visible"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/thirdClassType" />
+
+            <TextView
+                android:id="@+id/thirdLightLevel"
+                android:textSize="20sp"
+                android:textColor="@color/lightLevel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignTop="@+id/thirdClassType"
+                android:layout_marginEnd="10dp"
+                />
         </RelativeLayout>
 
     </LinearLayout>
-
-    <!--<ListView-->
-        <!--android:id="@+id/list"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"></ListView>-->
-
-
-
-
+    </ScrollView>
 </RelativeLayout>
