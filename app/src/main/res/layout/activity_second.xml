@@ -11,39 +11,65 @@
     android:background="@color/colorAccent"
     tools:context="com.example.jamie.warmindjsonfunctions.SecondActivity">
 
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:orientation="vertical"-->
-        <!--&gt;-->
-    <!--<TextView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:id="@+id/displayUsername"-->
-        <!--/>-->
-
-    <!--<TextView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="@string/membershipID"-->
-        <!--android:textStyle="bold"-->
-        <!--android:id="@+id/displayMembershipID"-->
-        <!--/>-->
-        <!--<TextView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--/>-->
-    <!--</LinearLayout>-->
-
-    <ListView
-        android:id="@+id/list"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></ListView>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/membershipID"
+        android:textStyle="bold"
+        />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/displayMembershipID"/>
+        android:id="@+id/displayMembershipID"
+        android:layout_marginBottom="20dp"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/lightLevel"
+        android:textStyle="bold"
+        />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/displayCharacterLightLevel"
+            android:layout_marginBottom="20dp"
+            />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="80dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/characterEmblem"
+                />
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:id="@+id/emblemIcon"
+                />
+        <ImageView
+            android:layout_width="380dp"
+            android:layout_height="match_parent"
+            android:id="@+id/emblemBackground"
+            />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <!--<ListView-->
+        <!--android:id="@+id/list"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"></ListView>-->
+
+
 
 
 </RelativeLayout>

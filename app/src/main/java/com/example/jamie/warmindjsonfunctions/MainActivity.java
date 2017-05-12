@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     EditText getPlayerUsername;
     Button searchUserBtn;
 
+    String playerUsername;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,14 +71,14 @@ public class MainActivity extends AppCompatActivity {
         //Intent intent = ((Activity) context).getIntent();
 //        Intent searchForPlayer = new Intent(MainActivity.this, Post.class);
 
-        String playerUsername = getPlayerUsername.getText().toString();
+        playerUsername = getPlayerUsername.getText().toString();
 
         Intent searchResult = new Intent(MainActivity.this, SecondActivity.class);
         searchResult.putExtra("user", playerUsername);
         startActivity(searchResult);
-
-        Post n = new Post(MainActivity.this, playerUsername);
-        n.execute();
+//
+//        Post n = new Post(MainActivity.this, playerUsername);
+//        n.execute();
 
 //        searchForPlayer.putExtra("username", playerUsername.getText().toString());
 //        startActivity(searchForPlayer);

@@ -26,6 +26,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by jamie on 4/5/17.
@@ -89,7 +92,7 @@ public class Post extends AsyncTask<Void, Void, Void> {
 ////        this.c = c;
 //    }
 
-    private MainActivity currentActivity;
+    private SecondActivity currentActivity;
 
 
     TextView outputTextView;
@@ -100,7 +103,7 @@ public class Post extends AsyncTask<Void, Void, Void> {
     private String jsonResponse ="";
 
 
-    public Post(MainActivity currentActivity, String playerUsername) {
+    public Post(SecondActivity currentActivity, String playerUsername) {
 
         this.currentActivity = currentActivity;
         this.playerUsername = playerUsername;
@@ -156,7 +159,7 @@ public class Post extends AsyncTask<Void, Void, Void> {
 //            jsonResponse = (json.getAsJsonObject("Response").getAsJsonObject("data").get("membershipType")).toString();
 
             //get membershipID
-//            jsonResponse = (json.getAsJsonArray("Response").get(0).getAsJsonObject().get("membershipId")).getAsString();
+            membershipID = (json.getAsJsonArray("Response").get(0).getAsJsonObject().get("membershipId")).getAsString();
 
             //JsonArray jArr = json.getAsJsonArray("Response");
 
@@ -166,7 +169,6 @@ public class Post extends AsyncTask<Void, Void, Void> {
 //                JsonObject jo = jE.getAsJsonObject();
 //                //jo.get("membershipId");
 //            }
-
 
 
             // Toast.makeText(c, json.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonObject("inventoryItem").get("itemName").toString(), Toast.LENGTH_LONG).show();
@@ -182,7 +184,7 @@ public class Post extends AsyncTask<Void, Void, Void> {
 
             //get membershipID
 
-            String searchDestinyPlayer = "https://www.bungie.net/Platform/Destiny/2/Account/"+jsonResponse+"/Summary/";
+            String searchDestinyPlayer = "https://www.bungie.net/Platform/Destiny/2/Account/"+membershipID+"/Summary/";
 
             URL getMembershipIdURL = new URL(searchDestinyPlayer);
             HttpURLConnection con2 = (HttpURLConnection) getMembershipIdURL.openConnection();
@@ -217,14 +219,18 @@ public class Post extends AsyncTask<Void, Void, Void> {
 //            jsonResponse = (json.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonObject("inventoryItem").get("itemName")).toString();
 
             //Working account summary
-            jsonResponse = (json.getAsJsonObject("Response").getAsJsonObject("data").get("membershipType")).toString();
+//            jsonResponse = (json.getAsJsonObject("Response").getAsJsonObject("data").get("membershipType")).toString();
 
             //get membershipID
-            String membershipID = (summaryJson.getAsJsonArray("Response").get(0).getAsJsonObject().get("membershipId")).getAsString();
+//            String membershipID = (summaryJson.getAsJsonArray("Response").get(0).getAsJsonObject().get("membershipId")).getAsString();
+
+//            String membershipID = jsonResponse;
+//            outputList.put("MembershipID", membershipID);
 
             //get Character[0] ID
             firstCharacterID = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(0).getAsJsonObject().getAsJsonObject("characterBase").get("characterId")).toString();
             System.out.println("before loop: "+firstCharacterID);
+
 
 
 //            int i;
@@ -233,9 +239,9 @@ public class Post extends AsyncTask<Void, Void, Void> {
                 System.out.println("inside");
                 firstClassType = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(0).getAsJsonObject().getAsJsonObject("characterBase").get("classType")).getAsString();
                 System.out.println("First character type: "+firstClassType);
-//                characterLightLevels[i] = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(0).getAsJsonObject().getAsJsonObject("characterBase").get("powerLevel")).toString();
-//                characterEmblems[i] = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(0).getAsJsonObject().get("emblemPath")).getAsString();
-//                characterEmblemBackgrounds[i] = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(0).getAsJsonObject().get("emblemPath")).getAsString();
+                firstCharacterLightLevel = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(0).getAsJsonObject().getAsJsonObject("characterBase").get("powerLevel")).toString();
+                firstCharacterEmblem = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(0).getAsJsonObject().get("emblemPath")).getAsString();
+                firstCharacterEmblemBackground = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(0).getAsJsonObject().get("backgroundPath")).getAsString();
 //            }
 //            firstClassType = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(0).getAsJsonObject().getAsJsonObject("characterBase").get("powerLevel")).toString();
 
@@ -256,7 +262,7 @@ public class Post extends AsyncTask<Void, Void, Void> {
             //String s = json.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonObject("inventoryItem").get("itemName").toString();
             //Log.d(test, "test message");
 
-            if(firstCharacterID != null){
+            if(summaryJson != null){
                 success = true;
             }
 
@@ -311,7 +317,10 @@ public class Post extends AsyncTask<Void, Void, Void> {
 
             //Toast.makeText(currentActivity, "CharacterID: "+firstCharacterID+"Classtype: "+characterLightLevels[0], Toast.LENGTH_LONG).show();
 
-            currentActivity.dumpJSON(response);
+            currentActivity.dumpJSON(firstCharacterID, firstClassType, firstCharacterEmblem, firstCharacterEmblemBackground);
+
+
+
 
 //            SecondActivity.outputResults(firstCharacterID);
 

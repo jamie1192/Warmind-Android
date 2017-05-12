@@ -3,4 +3,7 @@
     <string name="promptUsername">PSN/Xbox username</string>
     <string name="search">Search</string>
     <string name="membershipID">Membership ID</string>
+    <string name="characterClass">Character Class</string>
+    <string name="characterEmblem">Character Emblem</string>
+    <string name="lightLevel">Light Level</string>
 </resources>
