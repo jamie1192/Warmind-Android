@@ -3,4 +3,14 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+
+    <!--Switch Colors-->
+
+    <color name="disable_foreground_grey">#052abc</color>
+    <color name="disable_thumb_psn">#ce152bf1</color>
+    <color name="enable_thumb_xbox">#05bc0e</color>
+    <color name="enable_track_xbox">#c307890e</color>
+    <color name="enable_track_psn">#e20066ff</color>
+
 </resources>

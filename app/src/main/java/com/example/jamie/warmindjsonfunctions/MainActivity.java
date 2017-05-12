@@ -49,9 +49,7 @@ public class MainActivity extends AppCompatActivity {
 //        n.execute();
 
 
-        outputTextView = (TextView) findViewById(R.id.output);
-
-
+//        outputTextView = (TextView) findViewById(R.id.output);
     }
 
 
