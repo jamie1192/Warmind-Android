@@ -20,28 +20,12 @@ import java.net.URL;
 public class Post extends AsyncTask<Void, Void, Void> {
 
 
-    //Play playObject = new Play();
-//    passed = playObject.getCategory();
-
-//    MainActivity mainObject = new MainActivity();
-//    String playerUsername  = mainObject.getUsername();
-
-//    Bundle extras = getIntent().getExtras();
-//    String playerUsername= extras.getString("username");
-
-
     JsonObject json = null;
     JsonObject summaryJson = null;
     String response;
-    String grimoire = "";
 
     String membershipID ="";
 
-//    ArrayList characterType[];
-    String[] characterTypes;
-    String[] characterLightLevels;
-    String[] characterEmblems;
-    String[] characterEmblemBackgrounds;
 
     //Character[0]
     String firstCharacterID = "";
@@ -51,35 +35,24 @@ public class Post extends AsyncTask<Void, Void, Void> {
     String firstCharacterLightLevel = "";
 
     //Character[1]
-    String secondCharacterID = "";
     String secondClassType = "";
     String secondCharacterEmblem = "";
     String secondCharacterEmblemBackground = "";
     String secondCharacterLightLevel ="";
 
     //Character[2]
-    String thirdCharacterID = "";
     String thirdClassType = "";
     String thirdCharacterEmblemIcon = "";
     String thirdCharacterEmblemBackground = "";
     String thirdCharacterLightLevel ="";
 
+    //Trials
+
 
     String playerUsername;
-//    String playerUsername = "wheels00769";
-//    {
-//
-////        Activity c;
-////
-////        public netTask(Activity c) {
-////        this.c = c;
-//    }
     Integer consoleChoice;
 
     private SecondActivity currentActivity;
-
-
-    TextView outputTextView;
 
     private boolean success = false;
     private String error = "";
@@ -134,40 +107,11 @@ public class Post extends AsyncTask<Void, Void, Void> {
             JsonParser parser = new JsonParser();
             json = (JsonObject) parser.parse(response);
 
-            System.out.println();
-//                System.out.println
-
-            //Gjallarhorn response
-//            jsonResponse = (json.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonObject("inventoryItem").get("itemName")).toString();
-
-            //Working account summary
-//            jsonResponse = (json.getAsJsonObject("Response").getAsJsonObject("data").get("membershipType")).toString();
-
             //get membershipID
             membershipID = (json.getAsJsonArray("Response").get(0).getAsJsonObject().get("membershipId")).getAsString();
 
-            //JsonArray jArr = json.getAsJsonArray("Response");
 
-            System.out.println(jsonResponse);
-
-//            for(JsonElement jE : jArr){
-//                JsonObject jo = jE.getAsJsonObject();
-//                //jo.get("membershipId");
-//            }
-
-
-            // Toast.makeText(c, json.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonObject("inventoryItem").get("itemName").toString(), Toast.LENGTH_LONG).show();
-            //String s = json.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonObject("inventoryItem").get("itemName").toString();
-            //Log.d(test, "test message");
-
-
-            //commented out success, uncomment for original
-//            if(jsonResponse != null){
-//                success = true;
-//            }
-
-
-            //get membershipID
+            //get Summary
 
             String searchDestinyPlayer = "https://www.bungie.net/Platform/Destiny/"+consoleChoice+"/Account/"+membershipID+"/Summary/";
 
@@ -197,29 +141,10 @@ public class Post extends AsyncTask<Void, Void, Void> {
             JsonParser membershipIDparser = new JsonParser();
             summaryJson = (JsonObject) membershipIDparser.parse(membershipResponse);
 
-            System.out.println();
-//                System.out.println
-
-            //Gjallarhorn response
-//            jsonResponse = (json.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonObject("inventoryItem").get("itemName")).toString();
-
-            //Working account summary
-//            jsonResponse = (json.getAsJsonObject("Response").getAsJsonObject("data").get("membershipType")).toString();
-
-            //get membershipID
-//            String membershipID = (summaryJson.getAsJsonArray("Response").get(0).getAsJsonObject().get("membershipId")).getAsString();
-
-//            String membershipID = jsonResponse;
-//            outputList.put("MembershipID", membershipID);
-
             //get Character[0] ID
-            firstCharacterID = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(0).getAsJsonObject().getAsJsonObject("characterBase").get("characterId")).toString();
+            firstCharacterID = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(0).getAsJsonObject().getAsJsonObject("characterBase").get("characterId")).getAsString();
             System.out.println("before loop: "+firstCharacterID);
 
-
-
-//            int i;
-//            for(i = 0; i <= 2; i++){
 
                 System.out.println("inside");
                 firstClassType = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(0).getAsJsonObject().getAsJsonObject("characterBase").get("classType")).getAsString();
@@ -240,25 +165,21 @@ public class Post extends AsyncTask<Void, Void, Void> {
                 thirdCharacterLightLevel = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(2).getAsJsonObject().getAsJsonObject("characterBase").get("powerLevel")).toString();
                 thirdClassType = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(2).getAsJsonObject().getAsJsonObject("characterBase").get("classType")).getAsString();
 
-//            firstClassType = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(0).getAsJsonObject().getAsJsonObject("characterBase").get("powerLevel")).toString();
 
-
-//            JsonArray jArr = json.getAsJsonArray("Response");
-
-//            JsonArray jArr = summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters");
-
+            //paste
+//            String searchDestinyPlayer = "https://www.bungie.net/Platform/Destiny/"+consoleChoice+"/Account/"+membershipID+"/Summary/";
 //
-//            for(JsonElement jE : jArr){
-//                JsonObject jo = jE.getAsJsonObject();
-//                //jo.get("membershipId");
-//            }
+//            URL getMembershipIdURL = new URL(searchDestinyPlayer);
+//            HttpURLConnection con2 = (HttpURLConnection) getMembershipIdURL.openConnection();
+//
+//            con2.setRequestMethod("GET");
+
+
+            //end
 
 
 
-            // Toast.makeText(c, json.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonObject("inventoryItem").get("itemName").toString(), Toast.LENGTH_LONG).show();
-            //String s = json.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonObject("inventoryItem").get("itemName").toString();
-            //Log.d(test, "test message");
-
+            //Response->trialsOfOsiris->allTime->killsDeathsRatio->basic->displayValue;
             if(summaryJson != null){
                 success = true;
             }
@@ -266,11 +187,6 @@ public class Post extends AsyncTask<Void, Void, Void> {
             //end summary
 
 
-          //  Toast.makeText(currentActivity, s, Toast.LENGTH_SHORT).show();
-//            Toast.makeText(currentActivity, test, Toast.LENGTH_SHORT).show();
-
-//            output.setText(s.toString());
-            //Gjallarhorn
         } catch (IOException e) {
             e = e;
         } catch (Exception e) {
@@ -291,28 +207,8 @@ public class Post extends AsyncTask<Void, Void, Void> {
 
         System.out.println("Result?: "+result);
 
-        //NOTES FROM MATT:
-        /*
-        doInBackground runs on the background thread, so apparently we aren't allowed to do ui stuff then.
-        However, onPreExecute(),onPostExecute(Result) run on the UI thread, so we can do makeText.
-        Your toast wasn't working before because you had a local jsonResponse in doInBackground being set and not
-        the classes attribute of the same name
-
-        Also you weren't running this async task in main activity
-
-        So I got something to show up at least.
-         */
-
         if(success)
         {
-
-            //test next activity
-//            super.onPostExecute(result);
-//            Intent intent = new Intent(currentActivity, SecondActivity.class);
-//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//            currentActivity.startActivity(intent);
-
-            //Toast.makeText(currentActivity, "CharacterID: "+firstCharacterID+"Classtype: "+characterLightLevels[0], Toast.LENGTH_LONG).show();
 
             currentActivity.showResults(firstCharacterID, firstCharacterEmblem, firstCharacterEmblemBackground,
                     secondCharacterEmblem, secondCharacterEmblemBackground, thirdCharacterEmblemIcon, thirdCharacterEmblemBackground);
@@ -321,19 +217,6 @@ public class Post extends AsyncTask<Void, Void, Void> {
 
             currentActivity.getClassTypes(firstClassType, secondClassType, thirdClassType);
 
-
-
-//            SecondActivity.outputResults(firstCharacterID);
-
-
-            //to see the result, debug and look at response attribute for this class (its big, dont output it all!)
-
-//            Intent outputResults = new Intent(currentActivity, SecondActivity.class);
-//            currentActivity.startActivity(outputResults);
-
-           // Intent nextScreen = new Intent(currentActivity, SecondActivity.class);
-
-            //currentActivity.startActivity(nextScreen);
         }
         else
         {
@@ -341,8 +224,6 @@ public class Post extends AsyncTask<Void, Void, Void> {
         }
     }
 
-
-//    Toast.makeText(currentActivity, "Login successful!", Toast.LENGTH_SHORT).show();
 }
 
 

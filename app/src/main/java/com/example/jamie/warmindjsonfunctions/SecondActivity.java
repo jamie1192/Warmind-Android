@@ -1,17 +1,24 @@
 package com.example.jamie.warmindjsonfunctions;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Html;
+import android.util.AttributeSet;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+import java.util.Set;
+
 import static android.view.View.INVISIBLE;
 
 public class SecondActivity extends AppCompatActivity {
 
-    public ListView lv;
     TextView displayMembershipID;
     TextView displayFirstCharacterType, firstClassType, secondClassType, thirdClassType;
     TextView firstLightLevel, secondLightLevel, thirdLightLevel;
@@ -19,7 +26,6 @@ public class SecondActivity extends AppCompatActivity {
     ImageView emblemBackground, secondEmblemBackground, thirdEmblemBackground;
     ProgressBar loadingSpinner, loadingSpinner2, loadingSpinner3;
 
-    String firstCharacterEmblem;
 
     String bungie = "https://bungie.net";
     String appendEmblem, appendSecondEmblem, appendThirdEmblem;
@@ -28,6 +34,7 @@ public class SecondActivity extends AppCompatActivity {
 
     Integer consoleChoice;
 
+    Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,17 +53,18 @@ public class SecondActivity extends AppCompatActivity {
         }
         System.out.println("Console bool: "+console);
 
-
+//        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+//        SharedPreferences.Editor editor = sharedPref.edit();
+//        editor.putString("name", "Elena");
 //
-//        Bundle extras = getIntent().getExtras();
-//        String username_string = extras.getString("EXTRA_USERNAME");
-//        String password_string = extras.getString("EXTRA_PASSWORD");
-
-
-//        lv = (ListView) findViewById(R.id.list);
+//        editor.putInt("idName", 12);
+//        editor.putString(R.string.savedUsername), playerUsername);
+//        editor.commit();
 
         Post n = new Post(SecondActivity.this, playerUsername, consoleChoice);
         n.execute();
+
+
 
         loadingSpinner = (ProgressBar)findViewById(R.id.loadingSpinner);
         loadingSpinner2 = (ProgressBar)findViewById(R.id.loadingSpinner2);
@@ -77,16 +85,7 @@ public class SecondActivity extends AppCompatActivity {
         firstLightLevel = (TextView)findViewById(R.id.firstLightLevel);
         secondLightLevel = (TextView)findViewById(R.id.secondLightLevel);
         thirdLightLevel = (TextView)findViewById(R.id.thirdLightLevel);
-//        emblemIcon = (ImageView)findViewById(R.id.emblemIcon);
-//        emblemBackground = (ImageView)findViewById(R.id.emblemBackground);
 
-//        public void showResults(String jsonStr) {
-//            outputTextView.setText(jsonStr);
-//        }
-
-//            public void outputResults(String membershipId) {
-//            displayMembershipID.setText(membershipId);
-//        }
 
     }
     public void showResults(String firstCharacterID, String firstCharacterEmblem, String firstCharacterEmblemBackground, String secondEmblem,
@@ -113,9 +112,6 @@ public class SecondActivity extends AppCompatActivity {
         appendSecondBackground = bungie+secondCharacterEmblemBackground;
         appendThirdEmblem = bungie+thirdCharacterEmblemIcon;
         appendThirdBackground = bungie+thirdCharacterEmblemBackground;
-//                "\nFirst Character class Type: "+firstClassType+
-//                "\nFirst Character Emblem: "+firstCharacterEmblem+
-//                "\nFirst Character Background: "+firstCharacterEmblemBackground);
 
         //<img src="https://bungie.net/common/destiny_content/icons/6ab7743cc8535a1d07a161fb1248ae23.jpg">
 
@@ -180,6 +176,7 @@ public class SecondActivity extends AppCompatActivity {
             thirdClassType.setText("Warlock");
         }
     }
+
 
 
 }
