@@ -1,7 +1,6 @@
 package com.example.jamie.warmindjsonfunctions;
 
 import android.os.AsyncTask;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
@@ -52,7 +51,7 @@ public class Post extends AsyncTask<Void, Void, Void> {
     String playerUsername;
     Integer consoleChoice;
 
-    private SecondActivity currentActivity;
+    private SearchResults currentActivity;
 
     private boolean success = false;
     private String error = "";
@@ -60,7 +59,7 @@ public class Post extends AsyncTask<Void, Void, Void> {
     private String jsonResponse ="";
 
 
-    public Post(SecondActivity currentActivity, String playerUsername, Integer consoleChoice) {
+    public Post(SearchResults currentActivity, String playerUsername, Integer consoleChoice) {
 
         this.currentActivity = currentActivity;
         this.playerUsername = playerUsername;

@@ -1,30 +1,13 @@
 package com.example.jamie.warmindjsonfunctions;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
-
-
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -69,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void searchByUsername(View view) {
 
-//        Intent mIntent = new Intent(this, SecondActivity.class);
+//        Intent mIntent = new Intent(this, SearchResults.class);
 //        mIntent.putExtra("switch", s.isChecked());
 //        startActivity(mIntent);
 
@@ -85,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
         playerUsername = getPlayerUsername.getText().toString();
 
-        Intent searchResult = new Intent(MainActivity.this, SecondActivity.class);
+        Intent searchResult = new Intent(MainActivity.this, SearchResults.class);
         Bundle extras = new Bundle();
         extras.putString("user", playerUsername);
         extras.putBoolean("console", consoleSwitch.isChecked());
