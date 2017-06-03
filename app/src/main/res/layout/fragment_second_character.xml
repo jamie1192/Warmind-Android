@@ -1,0 +1,111 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.jamie.warmindjsonfunctions.secondCharacterFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:text="@string/hello_blank_fragment" />-->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="110dp"
+        >
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <ListView
+                android:id="@+id/secondCharacterListView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></ListView>
+        </ScrollView>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:maxWidth="350dp"
+
+        >
+
+        <ImageView
+            android:id="@+id/secondEmblemBackground"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter" />
+
+        <ImageView
+            android:id="@+id/secondEmblemIcon"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="9dp"
+            android:scaleType="fitCenter" />
+
+        <TextView
+            android:id="@+id/playerUsername"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/loadingSpinner2"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@+id/secondEmblemIcon"
+            android:text="Username"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/secondClassType"
+            android:text="placeholder"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/loadingSpinner2"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@+id/secondEmblemIcon" />
+
+        <ProgressBar
+            android:id="@+id/loadingSpinner2"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="16dp"
+
+            android:layout_toStartOf="@+id/secondClassType"
+            android:indeterminate="true"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/secondLightLevel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="400"
+            android:layout_alignTop="@+id/playerUsername"
+            android:layout_marginEnd="12dp"
+            android:textColor="@color/lightLevel"
+            android:textSize="20sp">
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/secondGrimoire"
+            android:text="3450"
+            android:layout_marginEnd="12dp"
+            android:layout_marginTop="30dp"
+            android:layout_alignParentEnd="true"
+            />
+    </RelativeLayout>
+
+</FrameLayout>

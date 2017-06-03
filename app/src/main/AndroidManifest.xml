@@ -21,7 +21,10 @@
         <activity
             android:name=".SearchResults"
             android:label="@string/title_activity_search_results"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".SearchHistory" />
+        <activity android:name=".FavouriteSearches" />
+        <activity android:name=".SlideAdapter"></activity>
     </application>
 
 </manifest>

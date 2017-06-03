@@ -1,9 +1,12 @@
 package com.example.jamie.warmindjsonfunctions;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -28,12 +31,15 @@ public class SearchResults extends AppCompatActivity
     TextView firstLightLevel, secondLightLevel, thirdLightLevel;
     ImageView emblemIcon, secondEmblemIcon, thirdEmblemIcon;
     ImageView emblemBackground, secondEmblemBackground, thirdEmblemBackground;
-    ProgressBar loadingSpinner, loadingSpinner2, loadingSpinner3;
+//    ProgressBar loadingSpinner, loadingSpinner2, loadingSpinner3;
 
 
     String bungie = "https://bungie.net";
     String appendEmblem, appendSecondEmblem, appendThirdEmblem;
     String appendBackground, appendSecondBackground, appendThirdBackground;
+
+    ViewPager pager;
+    SlideAdapter adapter;
 //    Boolean console;
 
     Integer consoleChoice;
@@ -47,16 +53,19 @@ public class SearchResults extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        pager = (ViewPager)findViewById(R.id.pager);
+        adapter = new SlideAdapter(getSupportFragmentManager());
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -89,25 +98,39 @@ public class SearchResults extends AppCompatActivity
 
 
 
-        loadingSpinner = (ProgressBar)findViewById(R.id.loadingSpinner);
-        loadingSpinner2 = (ProgressBar)findViewById(R.id.loadingSpinner2);
-        loadingSpinner3 = (ProgressBar)findViewById(R.id.loadingSpinner3);
-        displayMembershipID = (TextView)findViewById(R.id.displayMembershipID);
-        displayFirstCharacterType = (TextView)findViewById(R.id.displayFirstCharacterType);
-        emblemIcon = (ImageView)findViewById(R.id.emblemIcon);
-        emblemBackground = (ImageView)findViewById(R.id.emblemBackground);
-        secondEmblemIcon = (ImageView)findViewById(R.id.secondEmblemIcon);
-        secondEmblemBackground = (ImageView)findViewById(R.id.secondEmblemBackground);
-        thirdEmblemIcon = (ImageView)findViewById(R.id.thirdEmblemIcon);
-        thirdEmblemBackground = (ImageView)findViewById(R.id.thirdEmblemBackground);
+//        loadingSpinner = (ProgressBar)findViewById(R.id.loadingSpinner);
+//        loadingSpinner2 = (ProgressBar)findViewById(R.id.loadingSpinner2);
+//        loadingSpinner3 = (ProgressBar)findViewById(R.id.loadingSpinner3);
+//        displayMembershipID = (TextView)findViewById(R.id.displayMembershipID);
+//        displayFirstCharacterType = (TextView)findViewById(R.id.displayFirstCharacterType);
+//        emblemIcon = (ImageView)findViewById(R.id.emblemIcon);
+//        emblemBackground = (ImageView)findViewById(R.id.emblemBackground);
+//        secondEmblemIcon = (ImageView)findViewById(R.id.secondEmblemIcon);
+//        secondEmblemBackground = (ImageView)findViewById(R.id.secondEmblemBackground);
+//        thirdEmblemIcon = (ImageView)findViewById(R.id.thirdEmblemIcon);
+//        thirdEmblemBackground = (ImageView)findViewById(R.id.thirdEmblemBackground);
+//
+//        firstClassType = (TextView)findViewById(R.id.firstClassType);
+//        secondClassType = (TextView)findViewById(R.id.secondClassType);
+//        thirdClassType = (TextView)findViewById(R.id.thirdClassType);
+//
+//        firstLightLevel = (TextView)findViewById(R.id.firstLightLevel);
+//        secondLightLevel = (TextView)findViewById(R.id.secondLightLevel);
+//        thirdLightLevel = (TextView)findViewById(R.id.thirdLightLevel);
 
-        firstClassType = (TextView)findViewById(R.id.firstClassType);
-        secondClassType = (TextView)findViewById(R.id.secondClassType);
-        thirdClassType = (TextView)findViewById(R.id.thirdClassType);
 
-        firstLightLevel = (TextView)findViewById(R.id.firstLightLevel);
-        secondLightLevel = (TextView)findViewById(R.id.secondLightLevel);
-        thirdLightLevel = (TextView)findViewById(R.id.thirdLightLevel);
+        firstCharacterFragment firstCharacter = new firstCharacterFragment();
+
+
+        adapter.pages.add(firstCharacter);
+//        adapter.pages.add(imgFrag);
+//        adapter.pages.add(btnFrag);
+
+        pager.setAdapter(adapter);
+
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout.setupWithViewPager(pager, true);
 
     }
 
@@ -150,11 +173,14 @@ public class SearchResults extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.recentSearches) {
-            // Handle the camera action
+            Intent searchHistory = new Intent(SearchResults.this, SearchHistory.class);
+            startActivity(searchHistory);
         } else if (id == R.id.favouriteUsers) {
-
+            Intent favouriteSearches = new Intent(SearchResults.this, FavouriteSearches.class);
+            startActivity(favouriteSearches);
         } else if (id == R.id.switchUser) {
-
+            Intent switchUser = new Intent(SearchResults.this, MainActivity.class);
+            startActivity(switchUser);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -178,29 +204,59 @@ public class SearchResults extends AppCompatActivity
 //        }
 
 
-//        displayCharacterLightLevel.setText(firstClassType);
-        System.out.println("Emblem link: "+firstCharacterEmblem);
 
-        appendEmblem = bungie+firstCharacterEmblem;
-        appendSecondEmblem = bungie+secondEmblem;
-        appendBackground = bungie+firstCharacterEmblemBackground;
-        appendSecondBackground = bungie+secondCharacterEmblemBackground;
-        appendThirdEmblem = bungie+thirdCharacterEmblemIcon;
-        appendThirdBackground = bungie+thirdCharacterEmblemBackground;
+
+//        displayCharacterLightLevel.setText(firstClassType);
+//        System.out.println("Emblem link: "+firstCharacterEmblem);
+//
+//        appendEmblem = bungie+firstCharacterEmblem;
+//        appendSecondEmblem = bungie+secondEmblem;
+//        appendBackground = bungie+firstCharacterEmblemBackground;
+//        appendSecondBackground = bungie+secondCharacterEmblemBackground;
+//        appendThirdEmblem = bungie+thirdCharacterEmblemIcon;
+//        appendThirdBackground = bungie+thirdCharacterEmblemBackground;
 
         //<img src="https://bungie.net/common/destiny_content/icons/6ab7743cc8535a1d07a161fb1248ae23.jpg">
 
-        new downloadImage(this, emblemIcon).execute(appendEmblem);
+        //paste
+
+
+        Bundle firstCharBundle = new Bundle();
+        firstCharBundle.putString("firstCharacterID", firstCharacterID);
+        firstCharBundle.putString("firstCharacterEmblem", firstCharacterEmblem);
+        firstCharBundle.putString("firstCharacterEmblemBackground", firstCharacterEmblemBackground);
+
+        // set Fragmentclass Arguments
+        firstCharacterFragment fragobj = new firstCharacterFragment();
+        fragobj.setArguments(firstCharBundle);
+
+
+//        new downloadImage(this, emblemIcon).execute(appendEmblem);
         new downloadImage(this, secondEmblemIcon).execute(appendSecondEmblem);
         new downloadImage(this, emblemBackground).execute(appendBackground);
-        loadingSpinner.setVisibility(INVISIBLE);
+//        loadingSpinner.setVisibility(INVISIBLE);
         new downloadImage(this, secondEmblemBackground).execute(appendSecondBackground);
-        loadingSpinner2.setVisibility(INVISIBLE);
+//        loadingSpinner2.setVisibility(INVISIBLE);
         new downloadImage(this, thirdEmblemIcon).execute(appendThirdEmblem);
         new downloadImage(this, thirdEmblemBackground).execute(appendThirdBackground);
-        loadingSpinner3.setVisibility(INVISIBLE);
+//        loadingSpinner3.setVisibility(INVISIBLE);
         System.out.println(appendEmblem);
 
+
+    }
+
+    public void firstCharacterData(String firstCharacterID, String firstCharacterEmblem, String firstCharacterEmblemBackground, String firstCharacterLightLevel,
+                                   String firstClassType){
+
+    }
+
+    public void secondCharacterData(String secondCharacterID, String secondCharacterEmblem, String secondCharacterEmblemBackground, String secondCharacterLightLevel,
+                                    String secondClassType){
+
+    }
+
+    public void thirdCharacterData(String thirdCharacterID, String thirdCharacterEmblem, String thirdCharacterEmblemBackground, String thirdLightLevel,
+                                   String thirdClassType){
 
     }
 
@@ -251,5 +307,9 @@ public class SearchResults extends AppCompatActivity
             thirdClassType.setText("Warlock");
         }
     }
+
+
+
+
 
 }

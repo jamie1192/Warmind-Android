@@ -1,5 +1,6 @@
 package com.example.jamie.warmindjsonfunctions;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -16,12 +17,12 @@ import java.io.InputStream;
 
 public class downloadImage extends AsyncTask<String, Void, Bitmap> {
 
-    private SearchResults currentActivity;
+    private Activity currentActivity;
 
     private ImageView emblemIcon;
     public ProgressBar loadingSpinner;
 
-    public downloadImage(SearchResults currentActivity, ImageView emblemIcon) {
+    public downloadImage(Activity currentActivity, ImageView emblemIcon) {
         this.currentActivity = currentActivity;
         this.emblemIcon = emblemIcon;
     }
