@@ -1,17 +1,23 @@
 package com.example.jamie.warmindjsonfunctions;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
-import android.widget.TextView;
+import android.widget.Toast;
+
+import java.io.File;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView outputTextView;
+    SQLiteDatabase UsernamesDB = null;
+
     EditText getPlayerUsername;
     Button searchUserBtn;
     Switch consoleSwitch;
@@ -26,72 +32,53 @@ public class MainActivity extends AppCompatActivity {
         searchUserBtn = (Button) findViewById(R.id.searchUserBtn);
         consoleSwitch = (Switch) findViewById(R.id.consoleSwitch);
 
+        try{
+            //create or open a private database called UsernamesDB.db
+            UsernamesDB = this.openOrCreateDatabase("UsernamesDB.db", MODE_PRIVATE, null);
+            //if creating a new DB, it won't actually create te db until we do some sql with it
+            UsernamesDB.execSQL("CREATE TABLE IF NOT EXISTS history"+
+                    "(id integer primary key, username varchar, console varchar, UNIQUE(username));");
+            UsernamesDB.execSQL("CREATE TABLE IF NOT EXISTS favourites"+
+                    "(id integer primary key, username varchar, console varchar, UNIQUE(username));");
+            //check if database was created on phone/tablet file system
+            File db = getApplicationContext().getDatabasePath("UsernamesDB.db");
 
-//        Intent launchResult = new Intent(MainActivity.this, Post.class);
-//        putExtra("key", playerUsername);
-//        startActivity(launchResult);
+            if(db.exists()){
+                Toast.makeText(this, "Database Created!", Toast.LENGTH_SHORT).show();
+            }
+            else
+            {
+                Toast.makeText(this, "Database MISSING!", Toast.LENGTH_SHORT).show();
+            }
+        }
+        catch(Exception e){
+            Log.e("Creating DB Error", e.getMessage());
+        }
 
-//        Post n = new Post(this, playerUsername);
-//        n.execute();
-
-
-//        outputTextView = (TextView) findViewById(R.id.output);
     }
-
-
-//    public void addNewItem(View view) {
-//
-//        //to go to another activity, must build an intent
-//        //intent is asking android to do something. Android can say no (usually when there's not enough memory)
-//        Intent nextScreen = new Intent(this, NewItemActivity.class);
-//
-//        //lets try launch this thing. For result means we will wait for whatever results
-//        startActivityForResult(nextScreen, 1);
-//
-//    }
 
     public void searchByUsername(View view) {
 
-//        Intent mIntent = new Intent(this, SearchResults.class);
-//        mIntent.putExtra("switch", s.isChecked());
-//        startActivity(mIntent);
-
-//        Intent intent = new Intent(this, MyActivity.class);
-//        Bundle extras = new Bundle();
-//        extras.putString("EXTRA_USERNAME","my_username");
-//        extras.putString("EXTRA_PASSWORD","my_password");
-//        intent.putExtras(extras);
-//        startActivity(intent);
-
-        //Intent intent = ((Activity) context).getIntent();
-//        Intent searchForPlayer = new Intent(MainActivity.this, Post.class);
-
         playerUsername = getPlayerUsername.getText().toString();
 
-        Intent searchResult = new Intent(MainActivity.this, SearchResults.class);
-        Bundle extras = new Bundle();
-        extras.putString("user", playerUsername);
-        extras.putBoolean("console", consoleSwitch.isChecked());
-        searchResult.putExtras(extras);
-        //searchResult.putExtra("user", playerUsername, "switch", consoleSwitch.isChecked());
-        startActivity(searchResult);
-//
-//        Post n = new Post(MainActivity.this, playerUsername);
-//        n.execute();
+        if(TextUtils.isEmpty(playerUsername.trim())) {
+            Toast.makeText(this, "Please enter a username.", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            //Save search for history list
+            try {
+                UsernamesDB.execSQL("INSERT INTO history (username, console)" +
+                        "VALUES('" + playerUsername + "','" + consoleSwitch.isChecked() + "')");
+            }
+            catch(Exception e){
 
-//        searchForPlayer.putExtra("username", playerUsername.getText().toString());
-//        startActivity(searchForPlayer);
-    }
-
-//    public String getUsername() {
-//        return playerUsername.getText().toString();
-//    }
-
-
-    public void dumpJSON(String jsonStr) {
-        outputTextView.setText(jsonStr);
+            }
+            Intent searchResult = new Intent(MainActivity.this, SearchResults.class);
+            Bundle extras = new Bundle();
+            extras.putString("user", playerUsername);
+            extras.putBoolean("console", consoleSwitch.isChecked());
+            searchResult.putExtras(extras);
+            startActivity(searchResult);
+        }
     }
 }
-//
-//
-//}

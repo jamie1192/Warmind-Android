@@ -3,11 +3,9 @@ package com.example.jamie.warmindjsonfunctions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.view.View;
+
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -16,27 +14,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
-import static android.view.View.INVISIBLE;
+
 
 public class SearchResults extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-
-    TextView displayMembershipID;
-    TextView displayFirstCharacterType, firstClassType, secondClassType, thirdClassType;
-    TextView firstLightLevel, secondLightLevel, thirdLightLevel;
-    ImageView emblemIcon, secondEmblemIcon, thirdEmblemIcon;
-    ImageView emblemBackground, secondEmblemBackground, thirdEmblemBackground;
-//    ProgressBar loadingSpinner, loadingSpinner2, loadingSpinner3;
-
-
-    String bungie = "https://bungie.net";
-    String appendEmblem, appendSecondEmblem, appendThirdEmblem;
-    String appendBackground, appendSecondBackground, appendThirdBackground;
 
     ViewPager pager;
     SlideAdapter adapter;
@@ -52,11 +35,6 @@ public class SearchResults extends AppCompatActivity
         setContentView(R.layout.activity_search_results);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        pager = (ViewPager)findViewById(R.id.pager);
-        adapter = new SlideAdapter(getSupportFragmentManager());
-
-
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
@@ -98,33 +76,10 @@ public class SearchResults extends AppCompatActivity
 
 
 
-//        loadingSpinner = (ProgressBar)findViewById(R.id.loadingSpinner);
-//        loadingSpinner2 = (ProgressBar)findViewById(R.id.loadingSpinner2);
-//        loadingSpinner3 = (ProgressBar)findViewById(R.id.loadingSpinner3);
-//        displayMembershipID = (TextView)findViewById(R.id.displayMembershipID);
-//        displayFirstCharacterType = (TextView)findViewById(R.id.displayFirstCharacterType);
-//        emblemIcon = (ImageView)findViewById(R.id.emblemIcon);
-//        emblemBackground = (ImageView)findViewById(R.id.emblemBackground);
-//        secondEmblemIcon = (ImageView)findViewById(R.id.secondEmblemIcon);
-//        secondEmblemBackground = (ImageView)findViewById(R.id.secondEmblemBackground);
-//        thirdEmblemIcon = (ImageView)findViewById(R.id.thirdEmblemIcon);
-//        thirdEmblemBackground = (ImageView)findViewById(R.id.thirdEmblemBackground);
-//
-//        firstClassType = (TextView)findViewById(R.id.firstClassType);
-//        secondClassType = (TextView)findViewById(R.id.secondClassType);
-//        thirdClassType = (TextView)findViewById(R.id.thirdClassType);
-//
-//        firstLightLevel = (TextView)findViewById(R.id.firstLightLevel);
-//        secondLightLevel = (TextView)findViewById(R.id.secondLightLevel);
-//        thirdLightLevel = (TextView)findViewById(R.id.thirdLightLevel);
+        pager = (ViewPager)findViewById(R.id.pager);
+        adapter = new SlideAdapter(getSupportFragmentManager());
 
 
-        firstCharacterFragment firstCharacter = new firstCharacterFragment();
-
-
-        adapter.pages.add(firstCharacter);
-//        adapter.pages.add(imgFrag);
-//        adapter.pages.add(btnFrag);
 
         pager.setAdapter(adapter);
 
@@ -188,128 +143,97 @@ public class SearchResults extends AppCompatActivity
         return true;
     }
 
-
-    public void showResults(String firstCharacterID, String firstCharacterEmblem, String firstCharacterEmblemBackground, String secondEmblem,
-                            String secondCharacterEmblemBackground, String thirdCharacterEmblemIcon, String thirdCharacterEmblemBackground) {
-        displayMembershipID.setText(firstCharacterID);
-//        System.out.println(firstClassType);
-//        if(Integer.parseInt(firstClassType) == 0){
-//            displayFirstCharacterType.setText("Titan");
-//        }
-//        else if(Integer.parseInt(firstClassType) == 1){
-//            displayFirstCharacterType.setText("Hunter");
-//        }
-//        else if(Integer.parseInt(firstClassType) == 2){
-//            displayFirstCharacterType.setText("Warlock");
-//        }
-
-
-
-
-//        displayCharacterLightLevel.setText(firstClassType);
-//        System.out.println("Emblem link: "+firstCharacterEmblem);
-//
-//        appendEmblem = bungie+firstCharacterEmblem;
-//        appendSecondEmblem = bungie+secondEmblem;
-//        appendBackground = bungie+firstCharacterEmblemBackground;
-//        appendSecondBackground = bungie+secondCharacterEmblemBackground;
-//        appendThirdEmblem = bungie+thirdCharacterEmblemIcon;
-//        appendThirdBackground = bungie+thirdCharacterEmblemBackground;
-
-        //<img src="https://bungie.net/common/destiny_content/icons/6ab7743cc8535a1d07a161fb1248ae23.jpg">
-
-        //paste
-
-
-        Bundle firstCharBundle = new Bundle();
-        firstCharBundle.putString("firstCharacterID", firstCharacterID);
-        firstCharBundle.putString("firstCharacterEmblem", firstCharacterEmblem);
-        firstCharBundle.putString("firstCharacterEmblemBackground", firstCharacterEmblemBackground);
-
-        // set Fragmentclass Arguments
-        firstCharacterFragment fragobj = new firstCharacterFragment();
-        fragobj.setArguments(firstCharBundle);
-
-
-//        new downloadImage(this, emblemIcon).execute(appendEmblem);
-        new downloadImage(this, secondEmblemIcon).execute(appendSecondEmblem);
-        new downloadImage(this, emblemBackground).execute(appendBackground);
-//        loadingSpinner.setVisibility(INVISIBLE);
-        new downloadImage(this, secondEmblemBackground).execute(appendSecondBackground);
-//        loadingSpinner2.setVisibility(INVISIBLE);
-        new downloadImage(this, thirdEmblemIcon).execute(appendThirdEmblem);
-        new downloadImage(this, thirdEmblemBackground).execute(appendThirdBackground);
-//        loadingSpinner3.setVisibility(INVISIBLE);
-        System.out.println(appendEmblem);
-
-
-    }
-
     public void firstCharacterData(String firstCharacterID, String firstCharacterEmblem, String firstCharacterEmblemBackground, String firstCharacterLightLevel,
-                                   String firstClassType){
+                                   String firstClassType, String playerGrimoire, String displayName){
+
+        //MATT: just build and setup fragments as you get data for em
+        firstCharacterFragment firstCharacter = new firstCharacterFragment();
+        firstCharacter.firstCharacterID = firstCharacterID;
+        firstCharacter.firstCharacterEmblem = firstCharacterEmblem;
+        firstCharacter.firstCharacterEmblemBackground = firstCharacterEmblemBackground;
+        firstCharacter.firstCharacterLightLevel = firstCharacterLightLevel;
+        if(Integer.parseInt(firstClassType) == 0){
+            firstCharacter.getFirstClassType = "Titan";
+        }
+        else if(Integer.parseInt(firstClassType) == 1){
+            firstCharacter.getFirstClassType = "Hunter";
+        }
+        else if(Integer.parseInt(firstClassType) == 2){
+            firstCharacter.getFirstClassType = "Warlock";
+        }
+
+        firstCharacter.getPlayerGrimoire = playerGrimoire;
+        firstCharacter.displayName = displayName;
+
+
+
+//        Post s = new Post(SearchResults.this, playerUsername, consoleChoice);
+//        s.execute();
+
+//TODO - the rest of the values add them to the fragement
+
+
+
+
+
+        adapter.pages.add(firstCharacter);
+        adapter.notifyDataSetChanged();
+
 
     }
 
     public void secondCharacterData(String secondCharacterID, String secondCharacterEmblem, String secondCharacterEmblemBackground, String secondCharacterLightLevel,
-                                    String secondClassType){
+                                    String secondClassType, String playerGrimoire, String displayName){
 
+        secondCharacterFragment secondCharacter = new secondCharacterFragment();
+        secondCharacter.characterID = secondCharacterID;
+        secondCharacter.characterEmblem = secondCharacterEmblem;
+        secondCharacter.characterEmblemBackground = secondCharacterEmblemBackground;
+        secondCharacter.characterLightLevel = secondCharacterLightLevel;
+        if(Integer.parseInt(secondClassType) == 0){
+            secondCharacter.classType = "Titan";
+        }
+        else if(Integer.parseInt(secondClassType) == 1){
+            secondCharacter.classType = "Hunter";
+        }
+        else if(Integer.parseInt(secondClassType) == 2){
+            secondCharacter.classType = "Warlock";
+        }
+        secondCharacter.getPlayerGrimoire = playerGrimoire;
+        secondCharacter.displayName = displayName;
+
+
+//        secondCharacterFragment secondCharacter = new secondCharacterFragment();
+        adapter.pages.add(secondCharacter);
+        adapter.notifyDataSetChanged();
     }
 
     public void thirdCharacterData(String thirdCharacterID, String thirdCharacterEmblem, String thirdCharacterEmblemBackground, String thirdLightLevel,
-                                   String thirdClassType){
+                                   String thirdClassType, String playerGrimoire, String displayName){
 
+        thirdCharacterFragment thirdCharacter = new thirdCharacterFragment();
+
+        thirdCharacter.characterID = thirdCharacterID;
+
+        thirdCharacter.characterEmblem = thirdCharacterEmblem;
+        thirdCharacter.characterEmblemBackground = thirdCharacterEmblemBackground;
+
+        thirdCharacter.characterLightLevel = thirdLightLevel;
+
+        if(Integer.parseInt(thirdClassType) == 0){
+            thirdCharacter.classType = "Titan";
+        }
+        else if(Integer.parseInt(thirdClassType) == 1){
+            thirdCharacter.classType = "Hunter";
+        }
+        else if(Integer.parseInt(thirdClassType) == 2){
+            thirdCharacter.classType = "Warlock";
+        }
+        thirdCharacter.getPlayerGrimoire = playerGrimoire;
+        thirdCharacter.getDisplayName = displayName;
+
+       // thirdCharacterFragment thirdCharacter = new thirdCharacterFragment();
+        adapter.pages.add(thirdCharacter);
+        adapter.notifyDataSetChanged();
     }
-
-    public void showLightLevel(String firstCharacterLightLevel, String secondCharacterLightLevel, String thirdCharacterLightLevel){
-
-        String star = getResources().getString(R.string.lightIcon, firstCharacterLightLevel);
-        String star2 = getResources().getString(R.string.lightIcon, secondCharacterLightLevel);
-        String star3 = getResources().getString(R.string.lightIcon, thirdCharacterLightLevel);
-
-
-        firstLightLevel.setText(star);
-        secondLightLevel.setText(star2);
-        thirdLightLevel.setText(star3);
-    }
-
-    public void getClassTypes(String getFirstClassType, String getSecondClassType, String getThirdClassType){
-
-        //First character type
-        if(Integer.parseInt(getFirstClassType) == 0){
-            firstClassType.setText("Titan");
-        }
-        else if(Integer.parseInt(getFirstClassType) == 1){
-            firstClassType.setText("Hunter");
-        }
-        else if(Integer.parseInt(getFirstClassType) == 2){
-            firstClassType.setText("Warlock");
-        }
-
-        //second
-        if(Integer.parseInt(getSecondClassType) == 0){
-            secondClassType.setText("Titan");
-        }
-        else if(Integer.parseInt(getSecondClassType) == 1){
-            secondClassType.setText("Hunter");
-        }
-        else if(Integer.parseInt(getSecondClassType) == 2){
-            secondClassType.setText("Warlock");
-        }
-
-        //third
-        if(Integer.parseInt(getThirdClassType) == 0){
-            thirdClassType.setText("Titan");
-        }
-        else if(Integer.parseInt(getThirdClassType) == 1){
-            thirdClassType.setText("Hunter");
-        }
-        else if(Integer.parseInt(getThirdClassType) == 2){
-            thirdClassType.setText("Warlock");
-        }
-    }
-
-
-
-
-
 }

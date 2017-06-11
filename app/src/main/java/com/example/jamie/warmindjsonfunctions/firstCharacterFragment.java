@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import static android.view.View.INVISIBLE;
 
 
@@ -26,11 +28,10 @@ public class firstCharacterFragment extends Fragment {
 
 
     String firstCharacterID, firstCharacterEmblem, firstCharacterEmblemBackground, firstCharacterLightLevel,
-            getFirstClassType;
+            getFirstClassType, getPlayerGrimoire, displayName;
 
     String bungie = "https://bungie.net";
-    String appendEmblem = bungie+firstCharacterEmblem;
-    String appendBackground = bungie+firstCharacterEmblemBackground;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,29 +41,54 @@ public class firstCharacterFragment extends Fragment {
 
         ProgressBar loadingSpinner = (ProgressBar)view.findViewById(R.id.loadingSpinner);
         TextView firstLightLevel = (TextView)view.findViewById(R.id.firstLightLevel);
-        ImageView emblemIcon = (ImageView)view.findViewById(R.id.emblemIcon);
-        ImageView emblemBackground = (ImageView)view.findViewById(R.id.emblemBackground);
+        TextView playerUsername = (TextView)view.findViewById(R.id.playerUsername);
+        TextView playerGrimoire = (TextView)view.findViewById(R.id.playerGrimoire);
+
+        ImageView emblemIcon = (ImageView)view.findViewById(R.id.firstEmblemIcon);
+        ImageView emblemBackground = (ImageView)view.findViewById(R.id.firstEmblemBackground);
 
         TextView firstClassType = (TextView)view.findViewById(R.id.firstClassType);
 
+        System.out.println("Created view of frag");
 
 
 //    public void showResults(String firstCharacterID, String firstCharacterEmblem, String firstCharacterEmblemBackground, String secondEmblem,
 //                            String secondCharacterEmblemBackground, String thirdCharacterEmblemIcon, String thirdCharacterEmblemBackground) {
 //        displayMembershipID.setText(firstCharacterID);
 
-        ((SearchResults)getActivity()).firstCharacterData(firstCharacterID, firstCharacterEmblem, firstCharacterEmblemBackground, firstCharacterLightLevel,
-                getFirstClassType);
+       //
+        // MATT: This section not helping
+        // ((SearchResults)getActivity()).firstCharacterData(firstCharacterID, firstCharacterEmblem, firstCharacterEmblemBackground, firstCharacterLightLevel,
+          //      getFirstClassType, playerGrimoire, displayName);
 
 
-        appendEmblem = bungie+firstCharacterEmblem;
+        String appendEmblem = bungie+firstCharacterEmblem;
+        String appendBackground = bungie+firstCharacterEmblemBackground;
+        System.out.println("emblem link: "+ firstCharacterEmblem);
+        System.out.println("emblem bground: "+ firstCharacterEmblemBackground);
+        String star = getResources().getString(R.string.lightIcon, firstCharacterLightLevel);
+        playerUsername.setText(displayName);
+        firstClassType.setText(getFirstClassType);
+        playerGrimoire.setText(getPlayerGrimoire);
+        firstLightLevel.setText(star);
+//        appendEmblem = bungie+firstCharacterEmblem;
 
-        new downloadImage(getActivity(), emblemIcon).execute(appendEmblem);
-        loadingSpinner.setVisibility(INVISIBLE);
-        new downloadImage(getActivity(), emblemBackground).execute(appendBackground);
+        System.out.println("First frag icon: "+firstCharacterEmblem);
+
+//        new downloadImage(getActivity(), emblemIcon).execute(appendEmblem);
+        Picasso.with(getActivity())
+                .load(appendEmblem)
+                .into(emblemIcon);
+
+        Picasso.with(getActivity())
+                .load(appendBackground)
+                .placeholder( R.drawable.progress_animation )
+                .into(emblemBackground);
+//        new downloadImage(getActivity(), emblemBackground).execute(appendBackground);
 
 //        return inflater.inflate(R.layout.fragment_first_character, container, false);
 
+        loadingSpinner.setVisibility(INVISIBLE);
         return view;
     }
 }

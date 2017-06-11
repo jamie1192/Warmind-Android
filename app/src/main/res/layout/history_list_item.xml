@@ -12,9 +12,11 @@
             android:layout_height="match_parent"
             android:paddingLeft="10dp"
             android:id="@+id/consoleIcon"
-            android:src="@drawable/psn"/>
+            android:src="@drawable/psn" />
+
+
     <TextView
-        android:id="@+id/historyUsername"
+        android:id="@+id/rowUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -23,20 +25,12 @@
         android:textSize="16sp"
         android:text="Username Placeholder"
         android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/result"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="2dip"
-        android:textColor="@color/colorAccent" />
-
-    <!--<TextView-->
-        <!--android:id="@+id/mobile"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:textColor="#5d5d5d"-->
-        <!--android:textStyle="bold" />-->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/hiddenConsole"
+            android:text="asdasd"
+            />
 
         <ImageButton
             android:id="@+id/favorite_button"
@@ -47,6 +41,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerHorizontal="true"
             android:background="#00ffffff"
+            android:clickable="true"
             />
 
     </RelativeLayout>

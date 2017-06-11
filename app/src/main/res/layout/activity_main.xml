@@ -13,6 +13,7 @@
         android:layout_height="46dp"
         android:id="@+id/playerUsername"
         android:hint="@string/promptUsername"
+        android:text="jeewwbacca"
         android:maxLines="1"
         android:inputType="text"
         app:layout_constraintRight_toRightOf="parent"

@@ -47,9 +47,9 @@ public class Post extends AsyncTask<Void, Void, Void> {
     String thirdCharacterEmblemBackground = "";
     String thirdCharacterLightLevel ="";
 
-    //Trials
-
-
+    //Account
+    String playerGrimoire = "";
+    String displayName = "";
     String playerUsername;
     Integer consoleChoice;
 
@@ -108,9 +108,9 @@ public class Post extends AsyncTask<Void, Void, Void> {
             JsonParser parser = new JsonParser();
             json = (JsonObject) parser.parse(response);
 
-            //get membershipID
+            //get membershipID and displayName
             membershipID = (json.getAsJsonArray("Response").get(0).getAsJsonObject().get("membershipId")).getAsString();
-
+            displayName = (json.getAsJsonArray("Response").get(0).getAsJsonObject().get("displayName")).getAsString();
 
             //get Summary
 
@@ -146,16 +146,19 @@ public class Post extends AsyncTask<Void, Void, Void> {
 
 //            System.out.println("before loop: "+firstCharacterID);
 
-
+//            $json->Response->data->characters[0]->characterBase->grimoireScore;
 
                 //Character Slot [0]
                 System.out.println("inside");
+                playerGrimoire = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(0).getAsJsonObject().getAsJsonObject("characterBase").get("grimoireScore")).getAsString();
                 firstCharacterID = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(0).getAsJsonObject().getAsJsonObject("characterBase").get("characterId")).getAsString();
                 firstClassType = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(0).getAsJsonObject().getAsJsonObject("characterBase").get("classType")).getAsString();
-                System.out.println("First character type: "+firstClassType);
+                System.out.println("First character type: "+playerGrimoire);
                 firstCharacterLightLevel = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(0).getAsJsonObject().getAsJsonObject("characterBase").get("powerLevel")).toString();
+                System.out.println("light level: "+ firstCharacterLightLevel);
                 firstCharacterEmblem = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(0).getAsJsonObject().get("emblemPath")).getAsString();
                 firstCharacterEmblemBackground = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(0).getAsJsonObject().get("backgroundPath")).getAsString();
+                System.out.println("emblem icon link: "+firstCharacterEmblem);
 
 //              Character slot [1]
                 secondCharacterID = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(1).getAsJsonObject().getAsJsonObject("characterBase").get("characterId")).getAsString();
@@ -164,10 +167,13 @@ public class Post extends AsyncTask<Void, Void, Void> {
                 secondCharacterLightLevel = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(1).getAsJsonObject().getAsJsonObject("characterBase").get("powerLevel")).toString();
                 secondClassType = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(1).getAsJsonObject().getAsJsonObject("characterBase").get("classType")).getAsString();
 
+                System.out.println("second class type: "+ secondClassType);
 //              Character slot [2]
                 thirdCharacterID = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(2).getAsJsonObject().getAsJsonObject("characterBase").get("characterId")).getAsString();
                 thirdCharacterEmblem = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(2).getAsJsonObject().get("emblemPath")).getAsString();
+                System.out.println("getting 3rd emblem icon: "+thirdCharacterEmblem);
                 thirdCharacterEmblemBackground = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(2).getAsJsonObject().get("backgroundPath")).getAsString();
+                System.out.println("getting 3rd emblem bground: "+thirdCharacterEmblemBackground);
                 thirdCharacterLightLevel = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(2).getAsJsonObject().getAsJsonObject("characterBase").get("powerLevel")).toString();
                 thirdClassType = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(2).getAsJsonObject().getAsJsonObject("characterBase").get("classType")).getAsString();
 
@@ -205,9 +211,8 @@ public class Post extends AsyncTask<Void, Void, Void> {
 
     }
 
+
     //get summary
-
-
     @Override
     protected void onPostExecute(Void result) {
 
@@ -218,15 +223,16 @@ public class Post extends AsyncTask<Void, Void, Void> {
 
 //            currentActivity.showResults(firstCharacterID, firstCharacterEmblem, firstCharacterEmblemBackground,
 //                    secondCharacterEmblem, secondCharacterEmblemBackground, thirdCharacterEmblemIcon, thirdCharacterEmblemBackground);
-
+            Toast.makeText(currentActivity, "Retrieving player information..", Toast.LENGTH_SHORT).show();
+            System.out.println("inside success");
             currentActivity.firstCharacterData(firstCharacterID, firstCharacterEmblem, firstCharacterEmblemBackground, firstCharacterLightLevel,
-                     firstClassType);
+                     firstClassType, playerGrimoire, displayName);
 
             currentActivity.secondCharacterData(secondCharacterID, secondCharacterEmblem, secondCharacterEmblemBackground, secondCharacterLightLevel,
-                 secondClassType);
+                 secondClassType, playerGrimoire, displayName);
 
             currentActivity.thirdCharacterData(thirdCharacterID, thirdCharacterEmblem, thirdCharacterEmblemBackground, thirdCharacterLightLevel,
-                    thirdClassType);
+                    thirdClassType, playerGrimoire, displayName);
 
 //            currentActivity.showLightLevel(firstCharacterLightLevel, secondCharacterLightLevel, thirdCharacterLightLevel);
 //
