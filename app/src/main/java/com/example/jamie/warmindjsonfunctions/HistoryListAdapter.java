@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,22 +13,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by jastl on 11/06/2017.
  */
 
-public class HistoryListAdapter extends ArrayAdapter<historyData> {
+public class HistoryListAdapter extends ArrayAdapter<userData> {
 
     SQLiteDatabase UsernamesDB;
 
-    public HistoryListAdapter(Context context, List<historyData> objects)
+    private SearchHistory currentActivity;
+
+    public HistoryListAdapter(Context context, List<userData> objects)
     {
         super(context, R.layout.history_list_item, R.id.rowUsername, objects);
     }
@@ -71,7 +68,7 @@ public class HistoryListAdapter extends ArrayAdapter<historyData> {
         convertView = inflater.inflate(R.layout.history_list_item, null);
 
 
-        historyData item = getItem(position);//getPosition gets item at position from values passed in via the constructor. e.g position = 3, tvShows[3]
+        userData item = getItem(position);//getPosition gets item at position from values passed in via the constructor. e.g position = 3, tvShows[3]
 
 
         holder.rowUsername = (TextView)convertView.findViewById(R.id.rowUsername); //get the textView reference from the generated view
@@ -102,15 +99,25 @@ public class HistoryListAdapter extends ArrayAdapter<historyData> {
                 ViewGroup row = (ViewGroup) v.getParent();
                 String console = ((TextView) row.findViewById(R.id.hiddenConsole)).getText().toString();
                 String selectedUser = ((TextView) v.findViewById(R.id.rowUsername)).getText().toString();
-//                try {
-//                    UsernamesDB.execSQL("INSERT INTO favourites (username, console)" +
-//                            "VALUES('" + selectedUser + "','" + console + "')");
-//                }
-//                catch(Exception e){
-//                    Toast.makeText(getContext(), "Error: couldn't save favourite user.", Toast.LENGTH_SHORT).show();
-//                }
-//                String console = holder.hiddenConsole(v);
+
+                ((SearchHistory) getContext()).getSelectedUser(selectedUser, console);
+//
                 Toast.makeText(getContext(), selectedUser + " from row " + position + " was pressed. Console is " + console, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        holder.favouriteUser.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                ViewGroup row = (ViewGroup) v.getParent();
+                String console = ((TextView) row.findViewById(R.id.hiddenConsole)).getText().toString();
+                String selectedUser = ((TextView) row.findViewById(R.id.rowUsername)).getText().toString();
+                ImageView favBtn = (ImageView) v.findViewById(R.id.favorite_button);
+                favBtn.setImageResource(R.drawable.btn_star_on_normal_holo_dark);
+                ((SearchHistory) getContext()).saveFavouriteUser(selectedUser, console);
+//
+//                Toast.makeText(getContext(), selectedUser + " from row " + position + " was pressed. Console is " + console, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -159,7 +166,7 @@ public class HistoryListAdapter extends ArrayAdapter<historyData> {
 //
 //
 //
-//        historyData item = getItem(position);//getPosition gets item at position from values passed in via the constructor. e.g position = 3, tvShows[3]
+//        userData item = getItem(position);//getPosition gets item at position from values passed in via the constructor. e.g position = 3, tvShows[3]
 //        holder.rowUsername = (TextView)
 //
 //        TextView usernameText = (TextView)view.findViewById(R.id.rowUsername); //get the textView reference from the generated view

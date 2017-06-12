@@ -25,7 +25,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".SearchHistory" />
         <activity android:name=".FavouriteSearches" />
-        <activity android:name=".SlideAdapter"></activity>
+        <!--<activity android:name=".SlideAdapter"></activity>-->
     </application>
 
 </manifest>

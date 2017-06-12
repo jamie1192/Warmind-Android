@@ -4,11 +4,11 @@ package com.example.jamie.warmindjsonfunctions;
  * Created by jastl on 11/06/2017.
  */
 
-public class historyData {
+public class userData {
     private String username;
     private String console;
 
-    public historyData(String username, String console) {
+    public userData(String username, String console) {
         this.username= username;
         this.console = console;
     }
