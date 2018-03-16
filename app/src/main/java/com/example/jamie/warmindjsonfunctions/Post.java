@@ -1,26 +1,16 @@
 package com.example.jamie.warmindjsonfunctions;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.AsyncTask;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.google.gson.annotations.SerializedName;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Date;
 
 /**
  * Created by jamie on 4/5/17.
@@ -32,21 +22,38 @@ public class Post extends AsyncTask<Void, Void, Void> {
     JsonObject json = null;
     JsonObject summaryJson = null;
     String response;
+
     String membershipID ="";
+
+
+    //Character[0]
     String firstCharacterID = "";
+    String firstClassType = "";
+    String firstCharacterEmblem = "";
+    String firstCharacterEmblemBackground = "";
+    String firstCharacterLightLevel = "";
 
-    String playerUsername = "wheels00769";
-//    {
-//
-////        Activity c;
-////
-////        public netTask(Activity c) {
-////        this.c = c;
-//    }
+    //Character[1]
+    String secondCharacterID = "";
+    String secondClassType = "";
+    String secondCharacterEmblem = "";
+    String secondCharacterEmblemBackground = "";
+    String secondCharacterLightLevel ="";
 
-    private MainActivity currentActivity;
+    //Character[2]
+    String thirdCharacterID = "";
+    String thirdClassType = "";
+    String thirdCharacterEmblem = "";
+    String thirdCharacterEmblemBackground = "";
+    String thirdCharacterLightLevel ="";
 
-    TextView outputTextView;
+    //Account
+    String playerGrimoire = "";
+    String displayName = "";
+    String playerUsername;
+    Integer consoleChoice;
+
+    private SearchResults currentActivity;
 
     private boolean success = false;
     private String error = "";
@@ -54,8 +61,11 @@ public class Post extends AsyncTask<Void, Void, Void> {
     private String jsonResponse ="";
 
 
-    public Post(MainActivity currentActivity) {
+    public Post(SearchResults currentActivity, String playerUsername, Integer consoleChoice) {
+
         this.currentActivity = currentActivity;
+        this.playerUsername = playerUsername;
+        this.consoleChoice = consoleChoice;
     }
 
     @Override
@@ -66,7 +76,7 @@ public class Post extends AsyncTask<Void, Void, Void> {
             // Endpoint for Gjallarhorn
 //            String url = "https://www.bungie.net/platform/Destiny/Manifest/InventoryItem/1274330687/";
 
-            String url = "https://www.bungie.net/Platform/Destiny/SearchDestinyPlayer/2/"+playerUsername+"/";
+            String url = "https://www.bungie.net/Platform/Destiny/SearchDestinyPlayer/"+consoleChoice+"/"+playerUsername+"/";
 
             //Account summary
 //            String url = "https://www.bungie.net/Platform/Destiny/2/Account/4611686018439307322/Summary/";
@@ -98,43 +108,13 @@ public class Post extends AsyncTask<Void, Void, Void> {
             JsonParser parser = new JsonParser();
             json = (JsonObject) parser.parse(response);
 
-            System.out.println();
-//                System.out.println
+            //get membershipID and displayName
+            membershipID = (json.getAsJsonArray("Response").get(0).getAsJsonObject().get("membershipId")).getAsString();
+            displayName = (json.getAsJsonArray("Response").get(0).getAsJsonObject().get("displayName")).getAsString();
 
-            //Gjallarhorn response
-//            jsonResponse = (json.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonObject("inventoryItem").get("itemName")).toString();
+            //get Summary
 
-            //Working account summary
-//            jsonResponse = (json.getAsJsonObject("Response").getAsJsonObject("data").get("membershipType")).toString();
-
-            //get membershipID
-            jsonResponse = (json.getAsJsonArray("Response").get(0).getAsJsonObject().get("membershipId")).getAsString();
-
-            JsonArray jArr = json.getAsJsonArray("Response");
-
-            System.out.println(jsonResponse);
-
-            for(JsonElement jE : jArr){
-                JsonObject jo = jE.getAsJsonObject();
-                //jo.get("membershipId");
-            }
-
-
-
-            // Toast.makeText(c, json.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonObject("inventoryItem").get("itemName").toString(), Toast.LENGTH_LONG).show();
-            //String s = json.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonObject("inventoryItem").get("itemName").toString();
-            //Log.d(test, "test message");
-
-
-            //commented out success, uncomment for original
-//            if(jsonResponse != null){
-//                success = true;
-//            }
-
-
-            //get membershipID
-
-            String searchDestinyPlayer = "https://www.bungie.net/Platform/Destiny/2/Account/"+jsonResponse+"/Summary/";
+            String searchDestinyPlayer = "https://www.bungie.net/Platform/Destiny/"+consoleChoice+"/Account/"+membershipID+"/Summary/";
 
             URL getMembershipIdURL = new URL(searchDestinyPlayer);
             HttpURLConnection con2 = (HttpURLConnection) getMembershipIdURL.openConnection();
@@ -162,48 +142,63 @@ public class Post extends AsyncTask<Void, Void, Void> {
             JsonParser membershipIDparser = new JsonParser();
             summaryJson = (JsonObject) membershipIDparser.parse(membershipResponse);
 
-            System.out.println();
-//                System.out.println
-
-            //Gjallarhorn response
-//            jsonResponse = (json.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonObject("inventoryItem").get("itemName")).toString();
-
-            //Working account summary
-//            jsonResponse = (json.getAsJsonObject("Response").getAsJsonObject("data").get("membershipType")).toString();
-
-            //get membershipID
-//            String membershipID = (summaryJson.getAsJsonArray("Response").get(0).getAsJsonObject().get("membershipId")).getAsString();
-
             //get Character[0] ID
-            firstCharacterID = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(0).getAsJsonObject().getAsJsonObject("characterBase").get("characterId")).toString();
 
-            System.out.println(firstCharacterID);
-//            JsonArray jArr = json.getAsJsonArray("Response");
+//            System.out.println("before loop: "+firstCharacterID);
+
+//            $json->Response->data->characters[0]->characterBase->grimoireScore;
+
+                //Character Slot [0]
+                System.out.println("inside");
+                playerGrimoire = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(0).getAsJsonObject().getAsJsonObject("characterBase").get("grimoireScore")).getAsString();
+                firstCharacterID = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(0).getAsJsonObject().getAsJsonObject("characterBase").get("characterId")).getAsString();
+                firstClassType = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(0).getAsJsonObject().getAsJsonObject("characterBase").get("classType")).getAsString();
+                System.out.println("First character type: "+playerGrimoire);
+                firstCharacterLightLevel = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(0).getAsJsonObject().getAsJsonObject("characterBase").get("powerLevel")).toString();
+                System.out.println("light level: "+ firstCharacterLightLevel);
+                firstCharacterEmblem = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(0).getAsJsonObject().get("emblemPath")).getAsString();
+                firstCharacterEmblemBackground = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(0).getAsJsonObject().get("backgroundPath")).getAsString();
+                System.out.println("emblem icon link: "+firstCharacterEmblem);
+
+//              Character slot [1]
+                secondCharacterID = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(1).getAsJsonObject().getAsJsonObject("characterBase").get("characterId")).getAsString();
+                secondCharacterEmblem = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(1).getAsJsonObject().get("emblemPath")).getAsString();
+                secondCharacterEmblemBackground = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(1).getAsJsonObject().get("backgroundPath")).getAsString();
+                secondCharacterLightLevel = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(1).getAsJsonObject().getAsJsonObject("characterBase").get("powerLevel")).toString();
+                secondClassType = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(1).getAsJsonObject().getAsJsonObject("characterBase").get("classType")).getAsString();
+
+                System.out.println("second class type: "+ secondClassType);
+//              Character slot [2]
+                thirdCharacterID = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(2).getAsJsonObject().getAsJsonObject("characterBase").get("characterId")).getAsString();
+                thirdCharacterEmblem = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(2).getAsJsonObject().get("emblemPath")).getAsString();
+                System.out.println("getting 3rd emblem icon: "+thirdCharacterEmblem);
+                thirdCharacterEmblemBackground = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(2).getAsJsonObject().get("backgroundPath")).getAsString();
+                System.out.println("getting 3rd emblem bground: "+thirdCharacterEmblemBackground);
+                thirdCharacterLightLevel = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(2).getAsJsonObject().getAsJsonObject("characterBase").get("powerLevel")).toString();
+                thirdClassType = (summaryJson.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonArray("characters").get(2).getAsJsonObject().getAsJsonObject("characterBase").get("classType")).getAsString();
 
 
-            for(JsonElement jE : jArr){
-                JsonObject jo = jE.getAsJsonObject();
-                //jo.get("membershipId");
-            }
+            //paste
+//            String searchDestinyPlayer = "https://www.bungie.net/Platform/Destiny/"+consoleChoice+"/Account/"+membershipID+"/Summary/";
+//
+//            URL getMembershipIdURL = new URL(searchDestinyPlayer);
+//            HttpURLConnection con2 = (HttpURLConnection) getMembershipIdURL.openConnection();
+//
+//            con2.setRequestMethod("GET");
+
+
+            //end
 
 
 
-            // Toast.makeText(c, json.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonObject("inventoryItem").get("itemName").toString(), Toast.LENGTH_LONG).show();
-            //String s = json.getAsJsonObject("Response").getAsJsonObject("data").getAsJsonObject("inventoryItem").get("itemName").toString();
-            //Log.d(test, "test message");
-
-            if(firstCharacterID != null){
+            //Response->trialsOfOsiris->allTime->killsDeathsRatio->basic->displayValue;
+            if(summaryJson != null){
                 success = true;
             }
 
             //end summary
 
 
-          //  Toast.makeText(currentActivity, s, Toast.LENGTH_SHORT).show();
-//            Toast.makeText(currentActivity, test, Toast.LENGTH_SHORT).show();
-
-//            output.setText(s.toString());
-            //Gjallarhorn
         } catch (IOException e) {
             e = e;
         } catch (Exception e) {
@@ -216,44 +211,40 @@ public class Post extends AsyncTask<Void, Void, Void> {
 
     }
 
+
     //get summary
-
-
     @Override
-    protected void onPostExecute(Void aVoid) {
+    protected void onPostExecute(Void result) {
 
-        //NOTES FROM MATT:
-        /*
-        doInBackground runs on the background thread, so apparently we aren't allowed to do ui stuff then.
-        However, onPreExecute(),onPostExecute(Result) run on the UI thread, so we can do makeText.
-        Your toast wasn't working before because you had a local jsonResponse in doInBackground being set and not
-        the classes attribute of the same name
-
-        Also you weren't running this async task in main activity
-
-        So I got something to show up at least.
-         */
+        System.out.println("Result?: "+result);
 
         if(success)
         {
-            Toast.makeText(currentActivity, "CharacterID from variable: "+firstCharacterID, Toast.LENGTH_LONG).show();
 
-            currentActivity.dumpJSON(response);
+//            currentActivity.showResults(firstCharacterID, firstCharacterEmblem, firstCharacterEmblemBackground,
+//                    secondCharacterEmblem, secondCharacterEmblemBackground, thirdCharacterEmblemIcon, thirdCharacterEmblemBackground);
+            Toast.makeText(currentActivity, "Retrieving player information..", Toast.LENGTH_SHORT).show();
+            System.out.println("inside success");
+            currentActivity.firstCharacterData(firstCharacterID, firstCharacterEmblem, firstCharacterEmblemBackground, firstCharacterLightLevel,
+                     firstClassType, playerGrimoire, displayName);
 
-            //to see the result, debug and look at response attribute for this class (its big, dont output it all!)
+            currentActivity.secondCharacterData(secondCharacterID, secondCharacterEmblem, secondCharacterEmblemBackground, secondCharacterLightLevel,
+                 secondClassType, playerGrimoire, displayName);
 
-           // Intent nextScreen = new Intent(currentActivity, SecondActivity.class);
+            currentActivity.thirdCharacterData(thirdCharacterID, thirdCharacterEmblem, thirdCharacterEmblemBackground, thirdCharacterLightLevel,
+                    thirdClassType, playerGrimoire, displayName);
 
-            //currentActivity.startActivity(nextScreen);
+//            currentActivity.showLightLevel(firstCharacterLightLevel, secondCharacterLightLevel, thirdCharacterLightLevel);
+//
+//            currentActivity.getClassTypes(firstClassType, secondClassType, thirdClassType);
+
         }
         else
         {
-            Toast.makeText(currentActivity, "Failed: "+error, Toast.LENGTH_SHORT).show();
+            Toast.makeText(currentActivity, "Failed: Couldn't find username."+error, Toast.LENGTH_SHORT).show();
         }
     }
 
-
-//    Toast.makeText(currentActivity, "Login successful!", Toast.LENGTH_SHORT).show();
 }
 
 

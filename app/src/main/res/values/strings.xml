@@ -1,6 +1,26 @@
 <resources>
-    <string name="app_name">Warmind JSON Functions</string>
+    <string name="app_name">Warmind for Destiny</string>
     <string name="promptUsername">PSN/Xbox username</string>
     <string name="search">Search</string>
     <string name="membershipID">Membership ID</string>
+    <string name="characterClass">Character Classes</string>
+    <string name="characterEmblem">Character Emblem</string>
+    <string name="lightLevel">Light Level</string>
+    <string name="lightIcon">✦ %1$s</string>
+    <string name="savedUsername" />
+
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="recentSearches">Recent</string>
+    <string name="favouriteUsers">Favourites</string>
+    <string name="switchUser">Switch User</string>
+    <string name="title_activity_search_results">Search Results</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="noFavourites">No favourites saved yet :(</string>
+
 </resources>
